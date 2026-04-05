@@ -1,8 +1,8 @@
 param (
-    [Parameter(Mandatory=$false)]
+    [Parameter(Mandatory = $false)]
     [string]$FilePath = "slides.md",
 
-    [Parameter(Mandatory=$false)]
+    [Parameter(Mandatory = $false)]
     [int]$TypingSpeed = 20
 )
 
@@ -31,7 +31,7 @@ function Show-Slide {
     foreach ($line in $lines) {
         if ($line -match "^#\s+(.*)") {
             Write-Host ">>> " -ForegroundColor Cyan -NoNewline
-            Write-Host $matches[1] -ForegroundColor Cyan -Bold
+            Write-Host ("$([char]27)[1m" + $matches[1] + "$([char]27)[0m") -ForegroundColor Cyan
         }
         elseif ($line -match "^##\s+(.*)") {
             Write-Host ">> " -ForegroundColor Yellow -NoNewline
@@ -42,13 +42,14 @@ function Show-Slide {
             Write-Host $matches[1]
         }
         else {
+            $charCount = 0
             foreach ($char in $line.ToCharArray()) {
                 Write-Host $char -NoNewline
-                if (-not $skipTyping -and $speed -gt 0) {
+                $charCount++
+                if ($charCount % 3 -eq 0 -and -not $skipTyping -and $speed -gt 0) {
                     Start-Sleep -Milliseconds $speed
                     if ([Console]::KeyAvailable) {
                         $skipTyping = $true
-                        # 入力バッファをクリアせず、フラグだけ立てる
                     }
                 }
             }
