@@ -25,6 +25,10 @@ function Show-Slide {
     )
     Clear-Host
     
+    # コントロール表示を上部に配置
+    Write-Host "--- [ Slide $($script:currentSlide + 1) / $totalSlides ] ---" -ForegroundColor DarkGray
+    Write-Host "(Right: Next, Left: Prev, Q: Quit)`n" -ForegroundColor DarkGray
+    
     $skipTyping = $false
     $lines = $text -split "`r?`n"
     
@@ -59,9 +63,6 @@ function Show-Slide {
     
     # 表示が終わった後にキーバッファをクリア（演出スキップ用の入力を捨てる）
     while ([Console]::KeyAvailable) { [Console]::ReadKey($true) | Out-Null }
-
-    Write-Host "`n--- [ Slide $($script:currentSlide + 1) / $totalSlides ] ---" -ForegroundColor DarkGray
-    Write-Host "(Right: Next, Left: Prev, Q: Quit)" -ForegroundColor DarkGray
 }
 
 # メインループ
