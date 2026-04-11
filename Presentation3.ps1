@@ -1,6 +1,6 @@
 param(
     [Parameter(Mandatory = $false)]
-    [string]$FilePath = "slides.md",
+    [string]$FilePath = "slides_PS.md",
 
     [Parameter(Mandatory = $false)]
     [int]$TypingSpeed = 20
